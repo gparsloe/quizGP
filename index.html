@@ -28,9 +28,13 @@
         </div>
         <div class="question {{ (myQuestion.questionState === 'answered') ? 'answered' : 'unanswered'}} {{ ($index === activeQuestion) ? 'active' : 'inactive'}}" ng-repeat="myQuestion in myQuestions">
             <p class="txt">{{myQuestion.question}}</p>
-            <!--            <p class="ans" ng-repeat="answer in myQuestion.question.answers">hey</p>-->
 
-            <p class="ans" ng-repeat="Answer in myQuestions[$index].answers" ng-click="selectAnswer($parent.$index, $index)">{{Answer.text}}</p>
+<!-- why does {{ }} fail here and {} work: -->
+            <p class="ans" 
+               ng-class="{
+                         selected:isSelected($parent.$index, $index),
+                         correct:isCorrect($parent.$index, $index)}" ng-repeat="Answer in myQuestions[$index].answers" ng-click="selectAnswer($parent.$index, $index)">{{Answer.text}}
+            </p>
 
             <div class="feedback">
                 <p>

@@ -17,22 +17,26 @@
         $scope.activeQuestionAnswered = 0;
         $scope.percentage = 0;
         $http.get("js/quiz_data.json").then(function (quizData) {
+            console.log("quizData after get: ", quizData);
             $scope.myQuestions = quizData.data;
             console.log("myQuestions: ", $scope.myQuestions);
             console.log("myQuestions[0]", $scope.myQuestions[0]);
             $scope.totalQuestions = $scope.myQuestions.length;
 
+        }, function errorCallback(response) {
+            console.log("inside errorCallback, the response: " + response);
         });
 
+
         $scope.selectAnswer = function (qIndex, aIndex) {
-            //           console.log("inside selectAnswer", qIndex, "and ", aIndex); 
+console.log("inside selectAnswer", qIndex, "and ", aIndex); 
             var questionState = $scope.myQuestions[qIndex].questionState;
             if (questionState != 'answered') {
                 // question not answered yet
                 $scope.myQuestions[qIndex].selectedAnswer = aIndex;
                 var correctAnswer = $scope.myQuestions[qIndex].correct;
                 $scope.myQuestions[qIndex].correctAnswer = correctAnswer;
-                
+
                 if (aIndex === correctAnswer) {
                     $scope.myQuestions[qIndex].correctness = 'correct';
                     $scope.score += 1;
