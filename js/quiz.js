@@ -41,7 +41,7 @@ console.log("inside selectAnswer", qIndex, "and ", aIndex);
                     $scope.myQuestions[qIndex].correctness = 'correct';
                     $scope.score += 1;
                 } else {
-                    scope.myQuestions[qIndex].correctness = 'incorrect';
+                    $scope.myQuestions[qIndex].correctness = 'incorrect';
                 }
 
                 $scope.myQuestions[qIndex].questionState = 'answered';
