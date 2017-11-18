@@ -32,17 +32,20 @@
 <!-- why does {{ }} fail here and {} work: -->
             <p class="ans" 
                ng-class="{
+                         image:Answer.image,
                          selected:isSelected($parent.$index, $index),
-                         correct:isCorrect($parent.$index, $index)}" ng-repeat="Answer in myQuestions[$index].answers" ng-click="selectAnswer($parent.$index, $index)">{{Answer.text}}
+                         correct:isCorrect($parent.$index, $index)}" 
+               ng-style="{'background-image': 'url({{Answer.image}})'}"
+               ng-repeat="Answer in myQuestions[$index].answers" 
+               ng-click="selectAnswer($parent.$index, $index)">{{Answer.text}}
             </p>
 
             <div class="feedback">
-                <p>
-                    You are <strong>correct</strong>
+                <p ng-show="myQuestion.correctness === 'correct' ">You are <strong>correct</strong>
                 </p>
-                <p> Oops... That is not correct.</p>
-                <p> Additional feedback: </p>
-                <div class="btn">Continue</div>
+                <p ng-show="myQuestion.correctness === 'incorrect' "> Oops... That is not correct.</p>
+                <p >{{myQuestion.feedback}} </p>
+                <div class="btn" ng-click="selectContinue()">Continue</div>
                 <button type="button" class="btn">Real Button Continue</button>
             </div>
         </div>
