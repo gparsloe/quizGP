@@ -31,6 +31,7 @@
         $scope.selectAnswer = function (qIndex, aIndex) {
 console.log("inside selectAnswer", qIndex, "and ", aIndex); 
             var questionState = $scope.myQuestions[qIndex].questionState;
+            
             if (questionState != 'answered') {
                 // question not answered yet
                 $scope.myQuestions[qIndex].selectedAnswer = aIndex;
@@ -40,12 +41,14 @@ console.log("inside selectAnswer", qIndex, "and ", aIndex);
                 if (aIndex === correctAnswer) {
                     $scope.myQuestions[qIndex].correctness = 'correct';
                     $scope.score += 1;
+                    console.log('inside selectAnswer, the score is: ' + $scope.score);
                 } else {
                     $scope.myQuestions[qIndex].correctness = 'incorrect';
                 }
 
                 $scope.myQuestions[qIndex].questionState = 'answered';
             }
+            $scope.percentage = ($scope.score / $scope.totalQuestions) * 100;
         }
         $scope.isSelected = function (qIndex, aIndex) {
             return $scope.myQuestions[qIndex].selectedAnswer === aIndex;

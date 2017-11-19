@@ -54,9 +54,10 @@
                 <button type="button" class="btn">Real Button Continue</button>
             </div>
         </div>
-        <div class="results">
+        <div class="results {{ (totalQuestions === activeQuestion) ? 'active' : 'inactive' }}">
             <h3>Results</h3>
-            <p>You scored X% by answering X of the Total X questions.</p>
+            <p>Your raw score is: {{score}}</p>
+            <p>You scored {{percentage}}% by correctly answering {{score}} of the Total {{totalQuestions}} questions.</p>
             <p>Use the links below to challenge your friends.</p>
             <div class="share">
                 <a class='btn email' href="#">Email</a>
