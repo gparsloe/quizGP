@@ -59,9 +59,11 @@
             <p>Your raw score is: {{score}}</p>
             <p>You scored {{percentage}}% by correctly answering {{score}} of the Total {{totalQuestions}} questions.</p>
             <p>Use the links below to challenge your friends.</p>
-            <div class="share">
+            <div class="share" ng-bind-html="createShareLinks(percentage)">
+<!--
                 <a class='btn email' href="#">Email</a>
                 <a class='btn twitter' href="#">Tweet</a>
+--><a href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #LoveTwitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
         </div>
 
