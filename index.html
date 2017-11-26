@@ -13,45 +13,39 @@
 
     <div id="myQuiz" ng-controller='QuizController'>
 
-        <h1>Test Your Knowledge: <span class="title-one" >Saturn</span></h1>
+        <h1 class="title-two">Test Your Knowledge: </h1>
+        <h1 class="title-one">Saturn</h1>
         <div class="progress">
-            <div class="
-                 
+            <span class="{{ ($index === activeQuestion) ? 'on' : 'off'}}">Progress: </span>
+            <div class="                 
                 {{ ($index === activeQuestion) ? 'on' : 'off'}}
                  {{ (myQuestion.questionState === 'answered') ? 'answered': 'unanswered'}}
-                 {{ (myQuestion.correctness === 'correct') ? 'correct' : 'incorrect'}}"
-                 ng-repeat='myQuestion in myQuestions'></div>
-
+                 {{ (myQuestion.correctness === 'correct') ? 'correct' : 'incorrect'}}" ng-repeat='myQuestion in myQuestions'></div>
         </div>
         <div class="intro {{ (activeQuestion > -1) ? 'inactive' : 'active' }}">
-            <h2>Welcome </h2>
-            <p>Click Begin to test your knowledge of Saturn.</p>
+<!--
             <p class="btn" ng-click="activeQuestion = 0">Begin</p>
             <hr />
-            <button type="button" class="btn" ng-click="activeQuestion = 0">Real Button Begin</button>
-            <hr />
+-->
+            <button type="button" class="btn" ng-click="activeQuestion = 0">Begin</button>
         </div>
         <div class="question {{ (myQuestion.questionState === 'answered') ? 'answered' : 'unanswered'}} {{ ($index === activeQuestion) ? 'active' : 'inactive'}}" ng-repeat="myQuestion in myQuestions">
             <p class="txt">{{myQuestion.question}}</p>
 
-<!-- why does {{ }} fail here and {} work: -->
-            <p class="ans" 
-               ng-class="{
+            <!-- why does {{ }} fail here and {} work: -->
+            <p class="ans" ng-class="{
                          image:Answer.image,
                          selected:isSelected($parent.$index, $index),
-                         correct:isCorrect($parent.$index, $index)}" 
-               ng-style="{'background-image': 'url({{Answer.image}})'}"
-               ng-repeat="Answer in myQuestions[$index].answers" 
-               ng-click="selectAnswer($parent.$index, $index)">{{Answer.text}}
+                         correct:isCorrect($parent.$index, $index)}" ng-style="{'background-image': 'url({{Answer.image}})'}" ng-repeat="Answer in myQuestions[$index].answers" ng-click="selectAnswer($parent.$index, $index)">{{Answer.text}}
             </p>
 
             <div class="feedback">
                 <p ng-show="myQuestion.correctness === 'correct' ">You are <strong>correct</strong>
                 </p>
                 <p ng-show="myQuestion.correctness === 'incorrect' "> Oops... That is not correct.</p>
-                <p >{{myQuestion.feedback}} </p>
+                <p>{{myQuestion.feedback}} </p>
                 <div class="btn" ng-click="selectContinue()">Continue</div>
-                <button type="button" class="btn">Real Button Continue</button>
+                <button type="button" class="btn" ng-click="selectContinue()">Real Button Continue</button>
             </div>
         </div>
         <div class="results {{ (totalQuestions === activeQuestion) ? 'active' : 'inactive' }}">
@@ -60,11 +54,13 @@
             <p>You scored {{percentage}}% by correctly answering {{score}} of the Total {{totalQuestions}} questions.</p>
             <p>Use the links below to challenge your friends.</p>
             <div class="share" ng-bind-html="createShareLinks(percentage)">
-<!--
+                <!--
                 <a class='btn email' href="#">Email</a>
                 <a class='btn twitter' href="#">Tweet</a>
---><a href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #LoveTwitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+-->
+                <!--                <a href="https://twitter.com/intent/tweet?button_hashtag=LoveTwitter&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #LoveTwitter</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
             </div>
+            <button type="button" class="btn" ng-click="resetQuiz()">Reset Quiz</button>
         </div>
 
     </div>

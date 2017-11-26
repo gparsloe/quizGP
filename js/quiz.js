@@ -17,10 +17,7 @@
         $scope.activeQuestionAnswered = 0;
         $scope.percentage = 0;
         $http.get("js/quiz_data.json").then(function (quizData) {
-            console.log("quizData after get: ", quizData);
             $scope.myQuestions = quizData.data;
-            console.log("myQuestions: ", $scope.myQuestions);
-            console.log("myQuestions[0]", $scope.myQuestions[0]);
             $scope.totalQuestions = $scope.myQuestions.length;
 
         }, function errorCallback(response) {
@@ -29,9 +26,11 @@
 
 
         $scope.selectAnswer = function (qIndex, aIndex) {
-console.log("inside selectAnswer", qIndex, "and ", aIndex); 
-            var questionState = $scope.myQuestions[qIndex].questionState;
-            
+            console.log("inside selectAnswer", qIndex, "and ", aIndex);
+            var questionState = "";
+            // THIS IS FROM THE TUTORIAL, BUT DOESN"T SEEM CORRECT:
+            //           var questionState = $scope.myQuestions[qIndex].questionState;
+
             if (questionState != 'answered') {
                 // question not answered yet
                 $scope.myQuestions[qIndex].selectedAnswer = aIndex;
@@ -57,13 +56,27 @@ console.log("inside selectAnswer", qIndex, "and ", aIndex);
         $scope.isCorrect = function (qIndex, aIndex) {
             return $scope.myQuestions[qIndex].correctAnswer === aIndex;
         }
-        $scope.selectContinue = function(){
+        $scope.selectContinue = function () {
             return $scope.activeQuestion += 1;
         }
-        $scope.createShareLinks = function(percentage){
-            var url = 'http://codifydesign.com'; 
-            var emailLink = '<a class="btn email" href="mailto:?subject=Try To beat my quiz score!&amp;body=I scored a '+percentage+'% on this quiz about Saturn. Try to beat my score at '+url+'">Email a friend</a>';
-            var twitterLink = '<a class="btn twitter" target="_blank" href="https://twitter.com/intent/tweet?text=I scored a '+percentage+'% on this quiz about Saturn. Try to beat my score at&amp;hashtags=SaturnQuiz&amp;url='+url+'">Tweety your score</a>';
+        $scope.resetQuiz = function () {
+
+            $scope.score = 0;
+            $scope.activeQuestion = -1;
+            $scope.activeQuestionAnswered = 0;
+            $scope.percentage = 0;
+            for (var counteri = 0; counteri < $scope.myQuestions.length; counteri++) {
+                console.log("inside for, counteri: " + counteri);
+                $scope.myQuestions[counteri].correctness = "";
+                $scope.myQuestions[counteri].selectedAnswer = "-1";
+                 $scope.myQuestions[counteri].questionState = "unanswered";
+            }
+        }
+        $scope.createShareLinks = function (percentage) {
+            var url = 'http://codifydesign.com';
+            var emailLink = '<a class="btn email" href="mailto:?subject=Try To beat my quiz score!&amp;body=I scored a ' + percentage + '% on this quiz about Saturn. Try to beat my score at ' + url + '">Email a friend</a>';
+            var twitterLink = '<a class="btn twitter" target="_blank" href="https://twitter.com/intent/tweet?text=I scored a ' + percentage + '% on this quiz about Saturn. Try to beat my score at&amp;hashtags=SaturnQuiz&amp;url=' + url + '">Tweety your score</a>';
+            //            var resetQuiz = '<button type="button" class="btn" ng-click="resetQuiz()">Reset Quiz</button>';
             var newMarkup = emailLink + twitterLink;
             return $sce.trustAsHtml(newMarkup);
         }
